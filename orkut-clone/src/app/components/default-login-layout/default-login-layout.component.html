@@ -1,9 +1,11 @@
 <main>
-    <section>
+    <section class="image-section">
         <img src="/assets/orkut-login-page.jpg" alt="Orkut" title="Orkut" />
     </section>
-    <section>
-        <h1>Acesse a sua conta</h1>
+    <section class="form-section">
+        <h1>{{ title }}</h1>
+        <ng-content></ng-content>
+        <button>{{ btnText }}</button>
 
     </section>
 </main>
