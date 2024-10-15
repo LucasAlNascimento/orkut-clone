@@ -1,0 +1,24 @@
+@import "../../../styles/variables.scss";
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+fa-icon {
+    position: absolute;
+    top: 12px;
+    right: 15px;
+    cursor: pointer;
+    color: $primary-color;
+}
+
+span {
+    text-align: right;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    color: $primary-color;
+    margin-top: -10px;
+}
