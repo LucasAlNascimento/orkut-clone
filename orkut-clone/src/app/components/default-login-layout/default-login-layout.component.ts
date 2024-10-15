@@ -11,6 +11,7 @@ import { RouterModule } from '@angular/router';
 export class DefaultLoginLayoutComponent {
   @Input() title: string = "";
   @Input() btnText: string = "";
+  @Input() disableBtn: boolean = true;
   @Output("submit") onSubmit = new EventEmitter();
 
   submit(){

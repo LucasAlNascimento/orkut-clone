@@ -2,6 +2,7 @@
     title="Acesse a sua conta"
     btnText="Entrar"
     (submit)="submit()"
+    [disableBtn]="!loginForm.valid"
 >
 
     <form [formGroup]="loginForm">
