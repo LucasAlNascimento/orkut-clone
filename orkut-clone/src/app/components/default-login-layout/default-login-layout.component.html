@@ -3,9 +3,19 @@
         <img src="/assets/orkut-login-page.jpg" alt="Orkut" title="Orkut" />
     </section>
     <section class="form-section">
+        <nav>
+            <ul>
+                <li>
+                    <a routerLink="/login" routerLinkActive="active">Já tenho uma conta</a>
+                </li>
+                <li>
+                    <a routerLink="/cadastro" routerLinkActive="active">Criar conta</a>
+                </li>
+            </ul>
+        </nav>
         <h1>{{ title }}</h1>
         <ng-content></ng-content>
-        <button>{{ btnText }}</button>
+        <button (click)="submit()">{{ btnText }}</button>
 
     </section>
 </main>
