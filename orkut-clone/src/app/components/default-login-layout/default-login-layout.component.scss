@@ -42,4 +42,39 @@ section {
         border-radius: 30px;
         cursor: pointer;
     }
+
+    nav {
+        padding-bottom: 10px;
+        ul {
+          display: flex;
+          gap: 50px;
+          
+          li {
+            list-style: none;
+            
+            a {
+              text-decoration: none;
+              color: inherit;
+              position: relative;
+              font-weight: 400;
+            }
+      
+            a.active {
+              color: $primary-color;
+              font-weight: 600;
+
+              &::after {
+                content: '';
+                position: absolute;
+                left: 50%;
+                bottom: -8px;
+                width: 120%;
+                height: 2px;
+                background-color: $primary-color;
+                transform: translateX(-50%);
+              }
+            }
+          }
+        }
+      }
 }
