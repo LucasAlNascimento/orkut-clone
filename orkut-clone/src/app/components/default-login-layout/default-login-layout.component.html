@@ -9,13 +9,18 @@
                     <a routerLink="/login" routerLinkActive="active">Já tenho uma conta</a>
                 </li>
                 <li>
-                    <a routerLink="/cadastro" routerLinkActive="active">Criar conta</a>
+                    <a routerLink="/signup" routerLinkActive="active">Criar conta</a>
                 </li>
             </ul>
         </nav>
         <h1>{{ title }}</h1>
         <ng-content></ng-content>
-        <button (click)="submit()">{{ btnText }}</button>
+        <button 
+            (click)="submit()"
+            [disabled]="disableBtn"
+        >
+            {{ btnText }}
+        </button>
 
     </section>
 </main>
