@@ -41,6 +41,11 @@ section {
         padding: 17px 140px;
         border-radius: 30px;
         cursor: pointer;
+
+        &:disabled {
+          background-color: $primary-color-dark;
+          cursor: default;
+        }
     }
 
     nav {
@@ -62,6 +67,7 @@ section {
             a.active {
               color: $primary-color;
               font-weight: 600;
+              cursor: default;
 
               &::after {
                 content: '';
