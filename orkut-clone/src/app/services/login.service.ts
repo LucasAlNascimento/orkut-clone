@@ -1,21 +1,24 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { LoginResponse } from '../types/login-response.type';
-import { tap } from 'rxjs';
+import { inject, Injectable } from '@angular/core';
+import { Auth, createUserWithEmailAndPassword, updateProfile } from '@angular/fire/auth'
+import { Observable, from } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
+  firebaseAuth = inject(Auth)
 
-  constructor(private httpClient: HttpClient) { }
+  register(
+    name: string,
+    email: string,
+    password: string
+  ): Observable<void> {
+    const promise = createUserWithEmailAndPassword(
+      this.firebaseAuth,
+      email,
+      password
+    ).then(response => updateProfile(response.user, { displayName: name }))
 
-  login(name: string, password: string){
-    return this.httpClient.post<LoginResponse>("/login", { name, password }).pipe(
-      tap((value) => {
-        sessionStorage.setItem("auth-token", value.token)
-        sessionStorage.setItem("username", value.name)
-      })
-    )
+    return from(promise)
   }
 }

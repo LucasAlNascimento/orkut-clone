@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { DefaultLoginLayoutComponent } from '../../components/default-login-layout/default-login-layout.component';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { PrimaryInputComponent } from '../../components/primary-input/primary-input.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faEye } from '@fortawesome/free-regular-svg-icons';
+import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 import { LoginService } from '../../services/login.service';
 import { ToastrService } from 'ngx-toastr';
+import { Router, RouterModule } from '@angular/router';
 
 interface SignUpForm {
   name: FormControl,
@@ -21,7 +22,8 @@ interface SignUpForm {
     DefaultLoginLayoutComponent,
     ReactiveFormsModule,
     PrimaryInputComponent,
-    FontAwesomeModule
+    FontAwesomeModule,
+    RouterModule
   ],
   providers: [
     LoginService
@@ -32,20 +34,50 @@ interface SignUpForm {
 export class SignUpComponent {
   signupForm!: FormGroup<SignUpForm>;
   faEye = faEye;
+  faEyeSlash = faEyeSlash;
+  showPassword = false;
+  showPasswordConfirm = false;
 
-  constructor(private loginService: LoginService, private toastService: ToastrService){
+  constructor(
+    private loginService: LoginService,
+    private toastService: ToastrService,
+    private router: Router
+  ){
     this.signupForm = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.minLength(3)]),
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required, Validators.minLength(6)]),
       passwordConfirm: new FormControl('', [Validators.required, Validators.minLength(6)])
-    })
+    }, { validators: this.passwordValidator });
   }
 
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
+
+  togglePasswordConfirmVisibility() {
+    this.showPasswordConfirm = !this.showPasswordConfirm;
+  }
+
+  passwordValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+    const group = control as FormGroup;
+    const password = group.get('password')?.value;
+    const confirmPassword = group.get('passwordConfirm')?.value;
+
+    return password === confirmPassword ? null : { passwordsMismatch: true };
+  };
+
   submit(){
-    this.loginService.login(this.signupForm.value.email, this.signupForm.value.password).subscribe({
-      next: () => this.toastService.success("Login efetuado!"),
-      error: () => this.toastService.error("Erro! Tente novamente mais tarde")
+    if (this.signupForm.invalid) {
+      this.toastService.error("As senhas não coincidem ou há erros no formulário.");
+      return;
+    }
+
+    this.loginService.register(this.signupForm.value.name, this.signupForm.value.email, this.signupForm.value.password).subscribe(() => {
+      this.toastService.success("Usuário registrado com sucesso!");
+      this.router.navigate(['/login']);
+    }, (error) => {
+      this.toastService.error("Erro no registro: " + error.message)
     })
   }
 }
