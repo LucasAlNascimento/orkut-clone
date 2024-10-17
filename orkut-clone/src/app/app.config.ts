@@ -7,9 +7,10 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideToastr } from 'ngx-toastr';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
+import { environment } from './environment';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyC22APvXuAqhOyahQUrs6WUOhZTvTlrkv0",
+  apiKey: environment.googleApiKey,
   authDomain: "clone-2f4b9.firebaseapp.com",
   projectId: "clone-2f4b9",
   storageBucket: "clone-2f4b9.appspot.com",
