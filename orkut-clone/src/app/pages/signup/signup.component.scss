@@ -6,12 +6,14 @@ form {
     gap: 30px;
 }
 
-fa-icon {
+fa-icon  {
+    width: 24px;
     position: absolute;
     top: 12px;
     right: 15px;
     cursor: pointer;
     color: $primary-color;
+    text-align: center;
 }
 
 span {
